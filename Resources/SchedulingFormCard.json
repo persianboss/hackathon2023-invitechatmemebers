@@ -1,0 +1,170 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.6",
+  "body": [
+    {
+      "id": "meetingTitle",
+      "type": "Input.Text",
+      "label": "Meeting Title",
+      "isRequired": true,
+      "errorMessage": "Meeting title must have at least 10 alphanumeric characters",
+      "regex": "^.{10,}$"
+    },
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "Input.ChoiceSet",
+                  "id": "selectedUsers",
+                  "isMultiSelect": true,
+                  "isRequired": true,
+                  "label": "Please select the required users you want to invite for the meeting?",
+                  "errorMessage": "You must select at least one user",
+                  "choices": [
+                    {
+                      "$data": "${$root['users']}",
+                      "title": "${fullName}",
+                      "value": "${fullName} - ${email}",
+                      "$when": "${!isOrganizer}"
+                    }
+                  ]
+                }
+              ],
+              "id": "211"
+            }
+          ],
+          "id": "21"
+        }
+      ],
+      "id": "2"
+    },
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "items": [
+                {
+                  "type": "Input.Date",
+                  "label": "From Date",
+                  "isRequired": true,
+                  "errorMessage": "Please choose a date for your meeting",
+                  "id": "fromDate",
+                  "value": "${substring(utcNow(),0,10)}",
+                  "min": "${substring(utcNow(),0,10)}"
+                },
+                {
+                  "type": "Input.Time",
+                  "label": "From Time",
+                  "isRequired": true,
+                  "errorMessage": "Please choose a valid time, valid range is between 9 am to 5 pm",
+                  "id": "fromTime",
+                  "min": "09:00",
+                  "max": "17:00"
+                }
+              ],
+              "width": "stretch",
+              "id": "311",
+              "horizontalAlignment": "Left",
+              "height": "stretch",
+              "verticalContentAlignment": "Center",
+              "style": "emphasis"
+            },
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                {
+                  "type": "Input.Date",
+                  "label": "To Date",
+                  "isRequired": true,
+                  "errorMessage": "Please choose a date for your meeting",
+                  "value": "${substring(utcNow(),0,10)}",
+                  "id": "toDate",
+                  "min": "${substring(utcNow(),0,10)}"
+                },
+                {
+                  "type": "Input.Time",
+                  "label": "To Time",
+                  "isRequired": true,
+                  "errorMessage": "Please choose a valid time, valid range is between 9 am to 5 pm",
+                  "id": "toTime",
+                  "min": "09:00",
+                  "max": "17:00"
+                }
+              ],
+              "id": "312",
+              "verticalContentAlignment": "Center",
+              "horizontalAlignment": "Left",
+              "style": "emphasis"
+            }
+          ],
+          "id": "31"
+        }
+      ],
+      "id": "3"
+    },
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "ColumnSet",
+          "id": "41",
+          "columns": [
+            {
+              "type": "Column",
+              "items": [
+                {
+                  "type": "Container",
+                  "items": [
+                    {
+                      "type": "Input.Text",
+                      "placeholder": "Placeholder text",
+                      "label": "Comment",
+                      "isRequired": true,
+                      "errorMessage": "Please write a comment",
+                      "id": "meetingComment",
+                      "isMultiline": true,
+                      "maxLength": 300
+                    }
+                  ]
+                },
+                {
+                  "id": "411",
+                  "type": "ActionSet",
+                  "actions": [
+                    {
+                      "type": "Action.Submit",
+                      "title": "Schedule a meeting",
+                      "style": "positive",
+                      "data": {
+                        "id": "schedule",
+                        "action": "approve"
+                      }
+                    }
+                  ],
+                  "spacing": "Small",
+                  "separator": true,
+                  "horizontalAlignment": "Left"
+                }
+              ],
+              "width": "stretch"
+            }
+          ]
+        }
+      ],
+      "id": "4"
+    }
+  ]
+}
